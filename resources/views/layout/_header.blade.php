@@ -20,13 +20,13 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">管理<span class="caret"></span></a>
                     <ul class="dropdown-menu">
+                        <li><a href="{{route('businessList.index')}}">店铺列表</a></li>
+                        {{--<li><a href="{{route('businessList.create')}}">注册店铺</a></li>--}}
+                        <li role="separator" class="divider"></li>
                         <li><a href="{{route('category.index')}}">店铺分类列表</a></li>
-                        <li><a href="{{route('category.create')}}">添加店铺分类</a></li>
+                        {{--<li><a href="{{route('category.create')}}">添加店铺分类</a></li>--}}
                         <li role="separator" class="divider"></li>
-                        <li><a href="{{route('shopIndex')}}">店铺列表</a></li>
-                        <li><a href="{{route('shop')}}">注册店铺</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">One more separated link</a></li>
+                        <li><a href="{{route('foodCategory.index')}}">食品分类列表</a></li>
                     </ul>
                 </li>
             </ul>
@@ -37,26 +37,33 @@
                 {{--<button type="submit" class="btn btn-default">Submit</button>--}}
             {{--</form>--}}
             <ul class="nav navbar-nav navbar-right">
-                {{--@guest--}}
-                <li><a href="" style="color: #3471ef">注册</a></li>
+                @guest
+                <li><a href="{{route('user.store')}}" style="color: #3471ef">注册</a></li>
                 <li>&emsp;</li>
-                <li><a href="" style="color: #3471ef">登录</a></li>
-                {{--@endguest--}}
-                {{--@auth--}}
+                <li><a href="{{route('login')}}" style="color: #3471ef">登录</a></li>
+                @endguest
+                @auth
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">admin <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{\Illuminate\Support\Facades\Auth::user()->name}}<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-sm">注册admin</button>
+                            <button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-sm">注册管理员</button>
                         </li>
-                        <li><a href="#">admin列表</a></li>
+                        <li><a href="{{route('user.index')}}" >管理员列表</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">修改admin</a></li>
+                        {{--{{route('user.edit',['user'=>$user])}}修改当前管理员信息--}}
+                        <li><a href="">...</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">退出登录</a></li>
+                        <li>
+                            <form action="{{route('logout')}}" method="post">
+                                <input type="submit" value="退出登录" class="btn btn-link">
+                                {{csrf_field()}}
+                                {{method_field('DELETE')}}
+                            </form>
+                        </li>
                     </ul>
                 </li>
-                {{--@endauth--}}
+                @endauth
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

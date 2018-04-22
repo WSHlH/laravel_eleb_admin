@@ -1,7 +1,7 @@
 @extends('layout.default')
 @section('title','注册店铺')
 @section('content')
-    <form action="{{route('shopSave')}}" method="post" enctype="multipart/form-data" class="col-xs-6">
+    <form action="{{route('businessList.store')}}" method="post" enctype="multipart/form-data" class="col-xs-6">
         <div class="form-group">
             <label for="shop_name">店铺名称:</label>
             <input type="text" name="shop_name" class="form-control" id="shop_name" value="{{old('shop_name')}}">
@@ -61,11 +61,11 @@
         </div>
         <div class="form-group">
             <label for="notice">店铺公告:</label>
-            <input type="text" name="notice" value="{{old('notice')}}"  class="form-control" id="notice">
+            <textarea name="notice" class="form-control" cols="30" rows="4">{{old('notice')}}</textarea>
         </div>
         <div class="form-group">
             <label for="discount">店铺优惠:</label>
-            <input type="text" name="discount" value="{{old('discount')}}" class="form-control" id="discount">
+            <textarea name="discount" class="form-control" cols="30" rows="4">{{old('discount')}}</textarea>
         </div>
         <div class="form-group">
             <label for="invoice">审核通过:</label>
