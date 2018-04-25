@@ -15,7 +15,7 @@
             <tr data-id="{{$businessActivity->id}}">
                 <td>{{$businessActivity->id}}</td>
                 <td><a href="{{route('businessActivity.show',['businessActivity'=>$businessActivity])}}">{{$businessActivity->title}}</a></td>
-                <td>{!! mb_substr($businessActivity->content,0,30) !!}</td>
+                <td>{!! mb_substr($businessActivity->content,0,15) !!}...</td>
                 <td>{{$businessActivity->start}}</td>
                 <td>{{$businessActivity->end}}</td>
                 <td>

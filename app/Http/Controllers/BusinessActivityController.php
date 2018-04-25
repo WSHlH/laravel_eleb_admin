@@ -40,7 +40,7 @@ class BusinessActivityController extends Controller
         //检测
         $this->validate($request,[
             'title'=>'required|min:3|max:20',
-            'content'=>'required|min:10|max:150',
+            'content'=>'required|min:10',//|max:150
             'start'=>'required|date|after:today',
             'end'=>'required|date|after:today',
         ]);
@@ -89,7 +89,7 @@ class BusinessActivityController extends Controller
         //检测
         $this->validate($request,[
             'title'=>'min:3|max:20',
-            'content'=>'min:10|max:150',
+            'content'=>'min:10',//|max:150
             'start'=>'date|after:today',
             'end'=>'date|after:today',
         ]);
