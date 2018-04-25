@@ -1,6 +1,7 @@
 @extends('layout.default')
 @section('title','注册店铺')
 @section('content')
+    <link rel="stylesheet" type="text/css" href="/webuploader/webuploader.css">
     <form action="{{route('businessList.store')}}" method="post" enctype="multipart/form-data" class="col-xs-6">
         <div class="form-group">
             <label for="shop_name">店铺名称:</label>
@@ -23,9 +24,18 @@
             <label for="phone">电话号码:</label>
             <input type="text" name="phone" class="form-control" id="phone" value="{{old('phone')}}">
         </div>
-        <div class="form-group">
-            <label>店铺图片:</label>
-            <input type="file" name="shop_img" >
+        {{--<div class="form-group">--}}
+            {{--<label>店铺图片:</label>--}}
+            {{--<input type="file" name="shop_img" >--}}
+        {{--</div>--}}
+        <!--dom结构部分-->
+        <div id="uploader-demo">
+            <!--用来存放item-->
+            <div id="fileList" class="uploader-list"></div>
+            <div id="filePicker">店铺图片</div>
+            <br>
+            <img src="" id="shop-img" width="200">
+            <input type="hidden" name="shop_img" value="" id="shop_img" class="form-control">
         </div>
         <div class="form-group">
             <label for="start_send">起送价:</label>
@@ -84,4 +94,43 @@
     <div>&emsp;</div>
     <img src="" alt="" class="col-xs-1">
     <img src="/img/7.jpg" alt="" width="40%">
+@stop
+@section('jquery')
+    <script type="text/javascript" src="/webuploader/webuploader.js"></script>
+    <script>
+        // 初始化Web Uploader
+        var uploader = WebUploader.create({
+
+            // 选完文件后，是否自动上传。
+            auto: true,
+
+            //因为是仿表单提交,需要传token
+            formData:{"_token":"{{csrf_token()}}"},
+
+            // swf文件路径
+            swf: '/webuploader/Uploader.swf',
+
+            // 文件接收服务端。
+//            server: 'http://webuploader.duapp.com/server/fileupload.php',
+            server: '/businessListAdd',
+
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#filePicker',
+
+            // 只允许选择图片文件。
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            }
+        });
+        // 监听文件上传成功事件,回显
+        uploader.on( 'uploadSuccess', function( file,response ) {
+//            $( '#'+file.id ).addClass('upload-state-done');
+            var url = response.url;
+            $('#shop-img').attr('src',url);
+            $('#shop_img').val(url);
+        });
+    </script>
 @stop

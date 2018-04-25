@@ -27,4 +27,18 @@ Route::resource('category','BusinessCategoryController');
 Route::resource('businessList','BusinessListController');
 //Route::get('business','BusinessListController@status')->name('status');
 //添加食品分类
-Route::resource('foodCategory','FoodCategoryController');
+//Route::resource('foodCategory','FoodCategoryController');
+//添加针对店铺活动路由
+Route::resource('businessActivity','BusinessActivityController');
+
+//配置上传图片路由
+Route::post('/businessListAdd','UploadController@businessList');
+Route::post('/businessCatAdd','UploadController@businessCatAdd');
+
+Route::get('/oss', function()
+{
+    $client = App::make('aliyun-oss');
+    $client->putObject("lavarel-eleb", "2.txt", "hi");
+    $result = $client->getObject("lavarel-eleb", "2.txt");
+    echo $result;
+});

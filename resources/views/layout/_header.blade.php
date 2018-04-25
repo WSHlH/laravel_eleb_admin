@@ -17,18 +17,18 @@
                 <li class="active"><a href="{{route('category.index')}}">饿了吧 <span class="sr-only">(current)</span></a></li>
                 {{--<li class="active"><a href="">列表 <span class="sr-only">(current)</span></a></li>--}}
                 {{--<li><a href="">添加</a></li>--}}
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">管理<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{route('businessList.index')}}">店铺列表</a></li>
+                {{--<li class="dropdown">--}}
+                    {{--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">管理<span class="caret"></span></a>--}}
+                    {{--<ul class="dropdown-menu">--}}
+                        {{--<li><a href="{{route('businessList.index')}}">店铺列表</a></li>--}}
                         {{--<li><a href="{{route('businessList.create')}}">注册店铺</a></li>--}}
-                        <li role="separator" class="divider"></li>
-                        <li><a href="{{route('category.index')}}">店铺分类列表</a></li>
+                        {{--<li role="separator" class="divider"></li>--}}
+                        {{--<li><a href="{{route('category.index')}}">店铺分类列表</a></li>--}}
                         {{--<li><a href="{{route('category.create')}}">添加店铺分类</a></li>--}}
-                        <li role="separator" class="divider"></li>
-                        <li><a href="{{route('foodCategory.index')}}">食品分类列表</a></li>
-                    </ul>
-                </li>
+                        {{--<li role="separator" class="divider"></li>--}}
+                        {{--<li><a href="{{route('foodCategory.index')}}">食品分类列表</a></li>--}}
+                    {{--</ul>--}}
+                {{--</li>--}}
             </ul>
             {{--<form class="navbar-form navbar-left">--}}
                 {{--<div class="form-group">--}}
@@ -43,6 +43,9 @@
                 <li><a href="{{route('login')}}" style="color: #3471ef">登录</a></li>
                 @endguest
                 @auth
+                <li class="active"><a href="{{route('businessList.index')}}">店铺列表 <span class="sr-only">(current)</span></a></li>
+                <li class="active"><a href="{{route('category.index')}}">店铺分类列表 <span class="sr-only">(current)</span></a></li>
+                <li class="active"><a href="{{route('businessActivity.index')}}">店铺活动列表 <span class="sr-only">(current)</span></a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{\Illuminate\Support\Facades\Auth::user()->name}}<span class="caret"></span></a>
                     <ul class="dropdown-menu">
