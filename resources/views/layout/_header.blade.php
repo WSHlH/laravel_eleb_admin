@@ -14,8 +14,10 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
+                @auth
                 <li class="active"><a href="{{route('category.index')}}">饿了吧 <span class="sr-only">(current)</span></a></li>
-                {{--<li class="active"><a href="">列表 <span class="sr-only">(current)</span></a></li>--}}
+                <li class="active"><a href="{{route('customer.index')}}">会员列表<span class="sr-only">(current)</span></a></li>
+                @endauth
                 {{--<li><a href="">添加</a></li>--}}
                 {{--<li class="dropdown">--}}
                     {{--<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">管理<span class="caret"></span></a>--}}
@@ -38,34 +40,40 @@
             {{--</form>--}}
             <ul class="nav navbar-nav navbar-right">
                 @guest
-                <li><a href="{{route('user.store')}}" style="color: #3471ef">注册</a></li>
-                <li>&emsp;</li>
+                {{--<li><a href="{{route('user.create')}}" style="color: #3471ef">注册</a></li>--}}
+                {{--<li>&emsp;</li>--}}
                 <li><a href="{{route('login')}}" style="color: #3471ef">登录</a></li>
                 @endguest
                 @auth
+                <li class="active"><a href="{{route('orders.index')}}">销量统计 <span class="sr-only">(current)</span></a></li>
                 <li class="active"><a href="{{route('businessList.index')}}">店铺列表 <span class="sr-only">(current)</span></a></li>
                 <li class="active"><a href="{{route('category.index')}}">店铺分类列表 <span class="sr-only">(current)</span></a></li>
                 <li class="active"><a href="{{route('businessActivity.index')}}">店铺活动列表 <span class="sr-only">(current)</span></a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{\Illuminate\Support\Facades\Auth::user()->name}}<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-sm">注册管理员</button>
-                        </li>
-                        <li><a href="{{route('user.index')}}" >管理员列表</a></li>
-                        <li role="separator" class="divider"></li>
-                        {{--{{route('user.edit',['user'=>$user])}}修改当前管理员信息--}}
-                        <li><a href="">...</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li>
-                            <form action="{{route('logout')}}" method="post">
-                                <input type="submit" value="退出登录" class="btn btn-link">
-                                {{csrf_field()}}
-                                {{method_field('DELETE')}}
-                            </form>
-                        </li>
-                    </ul>
-                </li>
+                @admin
+                <li class="active"><a href="{{route('role.index')}}">角色列表<span class="sr-only">(current)</span></a></li>
+                <li class="active"><a href="{{route('permission.index')}}">权限列表<span class="sr-only">(current)</span></a></li>
+                @else
+                @endadmin
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{\Illuminate\Support\Facades\Auth::user()->name}}<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <button type="button" class="btn btn-link" data-toggle="modal" data-target=".bs-example-modal-sm">注册管理员</button>
+                            </li>
+                            <li><a href="{{route('user.index')}}" >管理员列表</a></li>
+                            <li role="separator" class="divider"></li>
+                            {{--{{route('user.edit',['user'=>$user])}}修改当前管理员信息--}}
+                            <li><a href="">...</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <form action="{{route('logout')}}" method="post">
+                                    <input type="submit" value="退出登录" class="btn btn-link">
+                                    {{csrf_field()}}
+                                    {{method_field('DELETE')}}
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
                 @endauth
             </ul>
         </div><!-- /.navbar-collapse -->

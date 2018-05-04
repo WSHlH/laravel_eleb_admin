@@ -1,6 +1,7 @@
 @extends('layout.default')
 @section('title','管理员列表')
 @section('content')
+    {{--<a href="{{route('user.create')}}" class="btn btn-primary">注册管理员</a>--}}
     <table class="table table-hover table-border table-responsive" id="admin_delete">
         <tr>
             <th>id</th>
@@ -12,7 +13,8 @@
                 <td>{{$user->id}}</td>
                 <td>{{$user->name}}</td>
                 <td>
-                    <a href="{{route('user.edit',['user'=>$user])}}" class="btn btn-sm btn-warning">编辑</a>
+                    <a href="{{route('userRole',['user'=>$user])}}" class="btn btn-sm btn-primary">权限</a>
+                    <a href="{{route('user.edit',['user'=>$user])}}" class="btn btn-sm btn-warning">密码</a>
                     <button class="btn btn-sm btn-info admin_delete">删除</button>
                 </td>
             </tr>

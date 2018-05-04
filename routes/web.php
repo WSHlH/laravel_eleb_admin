@@ -17,6 +17,8 @@
 
 //管理员路由
 Route::resource('user','UserController');
+Route::get('userRole/{userRole}/edit','UserController@userRole')->name('userRole');
+Route::post('userRoleSave/{userRoleSave}','UserController@userRoleSave')->name('userRoleSave');
 //管理员登录路由
 Route::get('login','LoginController@show')->name('login');
 Route::post('login','LoginController@store')->name('login');
@@ -42,3 +44,14 @@ Route::get('/oss', function()
     $result = $client->getObject("lavarel-eleb", "2.txt");
     echo $result;
 });
+
+//Route::resource('order','OrderController');
+Route::resource('orders','OrderController');
+//Route::get('range','OrderController@range')->name('range');
+
+Route::resource('customer','CustomerController');
+
+//权限添加
+Route::resource('permission','PermissionController');
+//添加角色
+Route::resource('role','RoleController');

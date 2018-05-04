@@ -17,6 +17,8 @@
             <td>{{$businessList->is_examine==1?'√':'×'}}</td>
             <td>{{$businessList->status==1?'是':'否'}}</td>
             <td>
+                {{--<a href="{{route('order.show',['businessList'=>$businessList])}}" class="btn btn-sm btn-info ">订单列表</a>--}}
+                {{--<a href="{{route('order.edit',['businessList'=>$businessList])}}" class="btn btn-sm btn-info ">销售量</a>--}}
                 <a href="{{route('businessList.edit',['businessList'=>$businessList])}}" class="btn btn-sm btn-warning">审核</a>
                 {{--<button class="btn btn-sm btn-primary business_status">禁用</button>--}}
                 <button class="btn btn-sm btn-danger business_delete">删除</button>

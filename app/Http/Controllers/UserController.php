@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Role;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
@@ -77,6 +79,25 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
+        $user->syncRoles([]);
         session()->flash('success','删除成功!');
+    }
+
+    public function userRole(User $userRole)
+    {
+//        var_dump($userRole);die;
+        $roles = Role::all();
+        return view('user.role',compact('userRole','roles'));
+    }
+
+    public function userRoleSave(Request $request,User $userRoleSave)
+    {
+//       var_dump($userRoleSave);die;
+        $userRoleSave->update([
+            'name'=>$request->name,
+        ]);
+        $userRoleSave->syncRoles($request->role);
+        session()->flash('success','管理员权限修改成功');
+        return redirect()->route('user.index');
     }
 }
