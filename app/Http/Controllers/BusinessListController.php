@@ -6,6 +6,7 @@ use App\Model\Business;
 use App\Model\BusinessList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 
@@ -80,17 +81,45 @@ class BusinessListController extends Controller
         return view('businessList.edit',compact('businessList','business','category'));
     }
 
+    public function mail($name,$email,$msg)
+    {
+        Mail::send(
+            'mail',//邮件视图模板
+            ['name'=>$name],
+            function ($message) use($email,$msg){
+                $message->to($email)->subject($msg);
+            }
+        );
+    }
+
     public function update(Request $request,BusinessList $businessList)
     {
+//        var_dump($businessList);die;
         //验证
         $this->validate($request,[
             'is_examine'=>'required',
         ]);
         //修改
-        $businessList->update([
-            'is_examine'=>$request->is_examine,
-            'status'=>$request->status,
-        ]);
+        DB::transaction(function()use($businessList,$request){
+            $businessList->update([
+                'is_examine'=>$request->is_examine,
+            ]);
+            DB::table('businesses')->where('id',$businessList->id)->update(['status'=>$request->status]);
+        });
+        $tel = DB::table('businesses')->where('id',$businessList->id)->first()->phone;
+        $msg='';
+        if ($request->is_examine==1){
+            $msg.='店铺审核通过';
+        }else{
+            $msg.='--店铺审核失败';
+        }
+        if ($request->status==1){
+            $msg.='--店铺被禁用';
+        }else{
+            $msg.='--店铺禁用解除';
+        }
+        $msg .= '!详细信息请点击查看';
+        $this->mail($businessList->shop_name,$tel,$msg);
         session()->flash('success','修改成功!');
         return redirect()->route('businessList.index');
     }

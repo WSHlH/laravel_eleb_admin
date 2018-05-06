@@ -14,17 +14,26 @@ class UserController extends Controller
 {
     public function index()
     {
+        if (!Auth::user()->can('user.index')){
+            return 403;
+        }
         $users = User::paginate(5);
         return view('user.index',compact('users'));
     }
 
     public function create()
     {
+        if (!Auth::user()->can('user.create')){
+            return 403;
+        }
         return view('user.create');
     }
 
     public function store(Request $request)
     {
+        if (!Auth::user()->can('user.store')){
+            return 403;
+        }
         //检测
         $this->validate($request,[
             'name'=>'required|min:2|max:10',
@@ -32,7 +41,7 @@ class UserController extends Controller
         ]);
         User::create([
             'name'=>$request->name,
-            'password'=>bcrypt($request->name),
+            'password'=>bcrypt($request->password),
         ]);
         //保存成功,提示并跳转
         session()->flash('success','管理员注册成功!');
@@ -41,11 +50,17 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
+        if (!Auth::user()->can('user.edit')){
+            return 403;
+        }
         return view('user.edit',compact('user'));
     }
 
     public function update(Request $request,User $user )
     {
+        if (!Auth::user()->can('user.update')){
+            return 403;
+        }
         //检测
         $this->validate($request,[
             'name'=>['required','min:2','max:10',Rule::unique('users')->ignore($user->id)],
@@ -78,6 +93,9 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        if (!Auth::user()->can('user.destroy')){
+            return 403;
+        }
         $user->delete();
         $user->syncRoles([]);
         session()->flash('success','删除成功!');
@@ -85,6 +103,9 @@ class UserController extends Controller
 
     public function userRole(User $userRole)
     {
+        if (!Auth::user()->can('userRole')){
+            return 403;
+        }
 //        var_dump($userRole);die;
         $roles = Role::all();
         return view('user.role',compact('userRole','roles'));
@@ -92,6 +113,9 @@ class UserController extends Controller
 
     public function userRoleSave(Request $request,User $userRoleSave)
     {
+        if (!Auth::user()->can('userRoleSave')){
+            return 403;
+        }
 //       var_dump($userRoleSave);die;
         $userRoleSave->update([
             'name'=>$request->name,

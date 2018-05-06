@@ -1,7 +1,7 @@
 @extends('layout.default')
 @section('title','修改权限')
 @section('content')
-    <p style="color:#c8c8cf;font-size: 24px">添加权限</p>
+    <p style="color:#c8c8cf;font-size: 24px">修改权限</p>
     <form action="{{route('permission.update',['permission'=>$permission])}}" method="POST" class="col-xs-6">
         <div class="form-group">
             <label>权限内容:</label>
