@@ -122,3 +122,11 @@ Route::get('/mail',function(){
     );
     return '邮件发送成功';
 });
+
+//抽奖活动表
+Route::resource('event','EventController');
+Route::get('prize/{prize}','EventController@prize')->name('prize');
+//抽奖活动奖品表
+Route::resource('eventPrize','EventPrizeController');
+//商家抽奖
+Route::resource('eventBusiness','EventBusinessController');
