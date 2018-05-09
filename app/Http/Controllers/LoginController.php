@@ -11,6 +11,10 @@ class LoginController extends Controller
 {
     public function show()
     {
+        //判断用户是否在登录界面
+        if (Auth::check()){
+            return redirect()->route('user.index',[Auth::user()]);
+        }
         return view('user.login');
     }
 
@@ -25,11 +29,11 @@ class LoginController extends Controller
         //检测成功,验证信息是否和数据库匹配
         if (Auth::attempt(['name'=>$request->name,'password'=>$request->password],$request->has('remember'))){
             //成功则提示并跳转
-            session()->flash('success','登陆成功!');
+            session()->flash('success','登录成功!');
             return redirect()->route('user.index',[Auth::user()]);
         }else{
             //失败则提示并跳转
-            session()->flash('warning','用户名或密码错误,登陆失败!');
+            session()->flash('warning','用户名或密码错误,登录失败!');
             return back()->withInput();
         }
     }
