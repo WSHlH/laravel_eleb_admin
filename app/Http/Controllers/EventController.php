@@ -99,7 +99,7 @@ class EventController extends Controller
             return redirect()->route('event.index')->with('danger','无商家参与,无法摇奖');
         }
         $prize = DB::table('event_prizes')->where('events_id',$prize->id)->first();
-        $event = DB::table('events')->where('events_id',$prize->id)->first();
+        $event = DB::table('events')->where('id',$prize->id)->first();
         if ($prize->business_lists_id==0 && $event->prize_date<=date('Y-m-d')){
             DB::table('event_prizes')->where('events_id',$prize->id)->update(['business_lists_id'=>array_pop($businesses)]);
             DB::table('events')->where('id',$prize->id)->update(['is_prize'=>1]);
